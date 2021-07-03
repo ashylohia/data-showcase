@@ -6,7 +6,7 @@ const Table = ({ row, column }) => {
                     <tr>
                         {
                             column.map((data, index) => (
-                                <th>
+                                <th key={`${index}a`}>
                                     {data.label}
                                 </th>
                             ))
@@ -16,11 +16,11 @@ const Table = ({ row, column }) => {
 
                 <tbody>
                     {
-                        row.map((data) => (
-                            <tr>
+                        row.map((data, indx) => (
+                            <tr key={indx}>
                                 {
-                                    column.map((col) => (
-                                        <td>
+                                    column.map((col, index1) => (
+                                        <td key={`a${index1}`}>
                                             { 
                                                 col.name == 'completed' ? (
                                                     data[col.name] ? 'true' : 'false'

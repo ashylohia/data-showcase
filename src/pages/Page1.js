@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Table from '../components/Table'
 import { fetchUserData } from '../actions/index'
 import { Link } from 'react-router-dom';
-
+import { source } from '../actions/api'
 
 
 const column = [
@@ -21,29 +21,37 @@ const Page1 = () => {
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
-        ( async () => {
-            try {
-                const res = await fetchUserData(URL);
-                setFinalRow(res.data);
-                setLoading(false)
-            
-            } catch (error) {
-                console.log("something went wrong!")    
-            }
 
-        })()
+        setTimeout(() => {            
+            ( async () => {
+                try {
+                    const res = await fetchUserData(URL);
+                    setFinalRow(res.data);
+                    setLoading(false)
+                
+                } catch (error) {
+                    console.log(error);
+                    console.log("something went wrong!")    
+                }
+    
+            })()
+        }, 5000);
+
     }, [finalRow])
     
     return (
         <>
+
+            <div className="container">
+                <div className="header">
+                    <h1>Todo List</h1>
+                    <Link to="/page2" onClick={() => source.cancel('test cancellation')}> page2 </Link>
+                </div>
+            </div>
             {
                 loading ? 'loading...'
                 : (
                     <div className="container">
-                        <div className="header">
-                            <h1>Todo List</h1>
-                            <Link to="/page2"> page2 </Link>
-                        </div>
                         <Table row={finalRow} column={column} />
                     </div>
                 )
